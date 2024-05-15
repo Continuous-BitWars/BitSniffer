@@ -1,0 +1,10 @@
+<select #gameSelect
+        class="text-start py-1 px-3 my-2 me-4 rounded-3 border-3 shadow-none w-50"
+        [style.background-color]="styleService.colorScheme.primary"
+        [style.border-color]="styleService.colorScheme.secondary"
+        [style.color]="styleService.colorScheme.text"
+        (change)="webSocketService.setTargetGame(parseInt(gameSelector.nativeElement.value))">
+  <option *ngIf="webSocketService.getAvailableGames().length == 0" value="0">None</option>
+  <option *ngFor="let game of webSocketService.getAvailableGames()" value="{{game.id}}">{{game.name}}</option>
+</select>
+<button class="mb-1 btn btn-success bi-arrow-clockwise" (click)="webSocketService.reload(true)"></button>

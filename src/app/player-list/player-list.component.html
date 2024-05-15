@@ -1,0 +1,17 @@
+<div class="rounded-3 m-2 py-2 row"
+     [style.background-color]="styleService.colorScheme.tertiary"
+     [style.color]="styleService.colorScheme.text">
+  <div class="col-2"></div>
+  <span class="col-5 p-0 text-start">Name</span>
+  <span class="col-3 p-0 text-end">Bases</span>
+  <div class="col-2"></div>
+</div>
+<div *ngFor="let player of playerService.players" class="rounded-3 m-2 py-2 row"
+  [style.background-color]="player.color + '55'"
+  [style.color]="styleService.colorScheme.text">
+  <div class="col-2"></div>
+  <span class="col-5 p-0 text-start">{{player.name}}</span>
+  <span class="col-3 p-0 text-end" style="font-family: 'the-länd', monospace">{{baseService.getOwnedBases(player.id).length}}</span>
+  <div class="col-2"></div>
+</div>
+

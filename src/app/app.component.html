@@ -1,0 +1,17 @@
+<div class="m-0 p-0 pb-5 min-vh-100 d-none d-xxl-block"
+  [ngStyle]="{'background': 'linear-gradient(180deg, ' + styleService.colorScheme.bgHighlight + ', ' + styleService.colorScheme.bgShadow + ')'}">
+  <app-header></app-header>
+  <div class="m-0 p-0 row" >
+    <div class="m-0 p-0 pt-5 col-2 text-center">
+      <app-game-info></app-game-info>
+      <app-player-list ></app-player-list>
+    </div>
+    <app-live-viewer class="m-0 p-3 col-10"></app-live-viewer>
+  </div>
+</div>
+<div class="m-0 p-0 p-5 vh-100 d-xxl-none d-flex flex-column align-items-center justify-content-center"
+     [ngStyle]="{'background': 'linear-gradient(180deg, ' + styleService.colorScheme.bgHighlight + ', ' + styleService.colorScheme.bgShadow + ')',
+      'color': styleService.colorScheme.text}">
+  <span style="font-family: 'the-länd', monospace; font-size: 3em"> Diese Auflösung wird nicht unterstützt</span>
+  <span style="font-family: 'the-länd', monospace; font-size: 1em">Falls diese Auflösung dennoch benötigt wird erreicht ihr den Dev unter 0100-NeinIchFixEsNicht oder per Brieftaube</span>
+</div>

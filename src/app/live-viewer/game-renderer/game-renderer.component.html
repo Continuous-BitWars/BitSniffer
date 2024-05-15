@@ -1,0 +1,13 @@
+<button class="m-1 btn btn-primary bi-house"
+        [ngStyle]="{'box-shadow': '0px 0px 0.25em 0.1em blue'}"
+        (click)="this.resetCamera()">
+
+</button>
+<button class="m-1 btn btn-danger bi-camera-video"
+        [ngStyle]="{'box-shadow': '0px 0px .25em 0.1em red'}"
+        (click)="cameraService.removeCamera(cameraId)">
+
+</button>
+<canvas #canvas class="m-1 p-1 w-100 h-100"
+        [ngStyle]="{'box-shadow': '0px 0px 1em 0.25em ' + styleService.colorScheme.secondary}">
+</canvas>

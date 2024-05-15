@@ -1,0 +1,23 @@
+<div class="m-0 p-0 d-flex">
+  <select #scaleSelect
+          class="text-end p-1 my-2 mx-4 rounded-3 border-3 shadow-none"
+          [style.background-color]="styleService.colorScheme.primary"
+          [style.border-color]="styleService.colorScheme.secondary"
+          [style.color]="styleService.colorScheme.text"
+          (change)="styleService.setRenderScale(parseInt(renderScaleSelect.nativeElement.value))">
+    <option value=76>Toaster</option>
+    <option value=144>144p</option>
+    <option value=240>240p</option>
+    <option value=360>360p</option>
+    <option value=480>480p</option>
+    <option value=720>720p</option>
+    <option value=1080>1080p</option>
+    <option value=1440>2k</option>
+    <option value=2060>4k</option>
+    <option value=4120>8k</option>
+  </select>
+
+  <div class="mt-1 mb-0 form-check form-switch form-switch-lg">
+    <input #styleSwitch class="form-check-input" type="checkbox" (click)="toggleSwitch()" checked>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+html, body {
+  min-height: 100%;
+  width: 100%;
+}
+
+@font-face {
+  font-family: 'the-länd';
+  src: url("./assets/aptos-display-bold.ttf");
+}
+
