@@ -66,7 +66,7 @@ export class PlayerService {
 
   // get player from uid
   public getPlayer(uid: number): Player {
-    return this.players[this.players.findIndex(player => player.id === uid)];
+    return this.players[this.players.findIndex(player => player.id === uid)] || this.players[0];
   }
 
   // clear all players
