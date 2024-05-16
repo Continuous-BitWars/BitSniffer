@@ -45,6 +45,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           echo "${{ env.DEPLOYMENT_TOKEN }}" > kubeconfig.yaml
+          chmod 600  kubeconfig.yaml
           
           helm upgrade --install \
           ${{ env.DEPLOYMENT_NAME }} \
