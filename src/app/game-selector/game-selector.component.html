@@ -5,6 +5,6 @@
         [style.color]="styleService.colorScheme.text"
         (change)="webSocketService.setTargetGame(parseInt(gameSelector.nativeElement.value))">
   <option *ngIf="webSocketService.getAvailableGames().length == 0" value="0">None</option>
-  <option *ngFor="let game of webSocketService.getAvailableGames()" value="{{game.id}}">{{game.name}}</option>
+  <option *ngFor="let game of webSocketService.getAvailableGames()" value="{{game.id}}">{{game.name}} ({{game.status}})</option>
 </select>
 <button class="mb-1 btn btn-success bi-arrow-clockwise" (click)="webSocketService.reload(true)"></button>

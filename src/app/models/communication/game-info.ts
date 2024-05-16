@@ -1,9 +1,9 @@
 import {Player} from "../game/player";
 
 export enum Status {
-  running,
-  stopped,
-  done,
+  running = "running",
+  stopped = "stopped",
+  done = "done",
 }
 
 export interface GameInfo {
