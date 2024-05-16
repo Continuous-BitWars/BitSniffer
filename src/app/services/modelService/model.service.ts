@@ -5,9 +5,9 @@ import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader.js";
 import {ModelType} from "../../models/model/model-type";
 import {Model} from "../../models/model/model";
 import {modelConfig, modelFont} from "../../config";
-import {TTFLoader} from "three/examples/jsm/loaders/TTFLoader";
-import {Font, FontLoader} from "three/examples/jsm/loaders/FontLoader";
-import {TextGeometry} from "three/examples/jsm/geometries/TextGeometry";
+import {TTFLoader} from "three/examples/jsm/loaders/TTFLoader.js";
+import {Font, FontLoader} from "three/examples/jsm/loaders/FontLoader.js";
+import {TextGeometry} from "three/examples/jsm/geometries/TextGeometry.js";
 
 export const PI: number = 3.1415926535897932384626;
 const exp: string[] = [" ", "K", "M", "G", "T", "P", "E", "Z", "Y"];

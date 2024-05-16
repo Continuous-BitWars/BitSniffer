@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Player} from "../../models/game/player";
 import {Color} from "three";
-import {randInt} from "three/src/math/MathUtils";
+import {randInt} from "three/src/math/MathUtils.js";
 
 @Injectable({
   providedIn: 'root'
