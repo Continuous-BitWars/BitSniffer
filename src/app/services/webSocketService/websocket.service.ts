@@ -56,7 +56,7 @@ export class WebsocketService {
       // fetch available games
       this.fetchGames();
       // load the current target game
-      this.setTargetGame(parseInt(this.cookieService.get('targetGame')) || 0);
+      this.setTargetGame(parseInt(this.cookieService.get('targetGame')) || 0, false);
       // clear cached data
       this.reload();
     };
@@ -118,27 +118,24 @@ export class WebsocketService {
   }
 
   // change the selected game
-  public setTargetGame(id: number): void {
+  public setTargetGame(id: number, reload: boolean = true): void {
     // change socket subscription
     this.target_game = id;
-    this.switchTarget("game_"+this.target_game, "game_"+id);
+    this.switchTarget("game_"+this.target_game, "game_"+id, reload);
 
     // store current selection
     this.cookieService.set("targetGame", String(id));
-
-    // clear cached data
-    this.reload();
   }
 
   // switch the target game
-  private switchTarget(from: string, to: string): void {
+  private switchTarget(from: string, to: string, reload: boolean = true): void {
     // unsubscribe the old game
     this.socket.send(JSON.stringify(<Subscription> {topic: from, message: "unsubscribe"}));
     // subscribe to new game
     this.socket.send(JSON.stringify(<Subscription> {topic: to, message: "subscribe"}));
 
     // update available games and players
-    this.reload(true);
+    this.reload(reload);
   }
 
   // handle a game update
