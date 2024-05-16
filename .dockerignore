@@ -1,0 +1,5 @@
+.angular
+.editorconfig
+.github
+dist
+node_modules
