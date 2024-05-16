@@ -25,7 +25,7 @@ export class GameSelectorComponent {
 
   ngAfterViewChecked(): void {
     // load the current target
-    this.gameSelector.nativeElement.value = this.webSocketService.getCurrentTarget()
+    this.gameSelector.nativeElement.value = this.webSocketService.getAvailableGames().length > 0 ? this.webSocketService.getCurrentTarget(): 0;
   }
 
   protected readonly parseInt = parseInt;

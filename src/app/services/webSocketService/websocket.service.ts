@@ -98,7 +98,6 @@ export class WebsocketService {
         let gameIndex: number = this.games.map(game => game.id).indexOf(this.target_game);
         // get current players
         let players: Player[] = gameIndex == -1 ? [] : this.games[gameIndex].players;
-        if (gameIndex == -1) this.target_game = 0;
         // set the players for the current game
         this.playerService.setPlayers(players);
 
