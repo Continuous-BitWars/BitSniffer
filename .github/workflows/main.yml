@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  DEPLOYMENT_NAME: bit-sniffer
+  DEPLOYMENT_NAME: bitsniffer
   DEPLOYMENT_TOKEN: ${{ secrets.TOKEN }}
   NAMESPACE: ${{ vars.NAMESPACE }}
   APP_URL: ${{ vars.APP_URL }}
