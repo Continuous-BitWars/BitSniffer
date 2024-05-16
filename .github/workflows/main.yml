@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  DEPLOYMENT_NAME: bitSniffer
+  DEPLOYMENT_NAME: bit-sniffer
   DEPLOYMENT_TOKEN: ${{ secrets.TOKEN }}
   NAMESPACE: ${{ vars.NAMESPACE }}
   APP_URL: ${{ vars.APP_URL }}
@@ -45,6 +45,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           echo "${{ env.DEPLOYMENT_TOKEN }}" > kubeconfig.yaml
+          chmod 600  kubeconfig.yaml
           
           helm upgrade --install \
           ${{ env.DEPLOYMENT_NAME }} \
