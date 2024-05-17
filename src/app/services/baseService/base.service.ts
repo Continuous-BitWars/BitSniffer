@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {Base} from "../../models/game/base";
-import {Color, Group, Vector3} from "three";
+import {Color, Group, Object3D, Vector3} from "three";
 import {ModelService} from "../modelService/model.service";
 import {CacheBase} from "../../models/cache/cache-base";
 import {PlayerService} from "../playerService/player.service";
@@ -29,7 +29,7 @@ export class BaseService {
   // update a base
   private updateBase(base: Base): void {
     // get the index of the base in cache
-    let baseIndex: number = this.getBaseListIndex(base.uid);
+    let baseIndex: number = this.getListIndex(base.uid);
     // check if the base exists
     if (baseIndex === -1) {
       // add a new base with its model
@@ -41,6 +41,9 @@ export class BaseService {
 
       // update the base with baseIndex with a new owner
       this.updateColor(base.uid, base.player);
+      // add the population to the base
+      this.addFont(base.uid, base.population);
+
       // return since base is up-to-date
       return;
     }
@@ -61,13 +64,20 @@ export class BaseService {
       this.updateColor(base.uid, base.player);
     }
 
+    // check for a change in population
+    if (this.bases[baseIndex].base.population !== base.population) {
+      // update the font
+      this.removeFont(base.uid);
+      this.addFont(base.uid, base.population);
+    }
+
     // update the rest of the base
     this.bases[baseIndex].base = base;
   }
 
   // update the base team color
   private updateColor(uid: number, playerId: number): void {
-    let base: CacheBase = this.bases[this.getBaseListIndex(uid)];
+    let base: CacheBase = this.bases[this.getListIndex(uid)];
 
     // loop over all model layers
     base.model.traverse((model): void => {
@@ -84,7 +94,7 @@ export class BaseService {
   }
 
   // get the index of a base in the cache
-  private getBaseListIndex(uid: number): number {
+  private getListIndex(uid: number): number {
     // map the bases to their id and get the index of the id
     return this.bases.map(base => base.base.uid).indexOf(uid);
   }
@@ -103,11 +113,54 @@ export class BaseService {
   // get base position by uid
   public getPosition(uid: number): Vector3 {
     // return the position of the base
-    return <Vector3> this.bases[this.getBaseListIndex(uid)].base.position;
+    return <Vector3> this.bases[this.getListIndex(uid)].base.position;
   }
 
   // get bases by owner
   public getOwnedBases(playerId: number): Base[] {
     return this.bases.map(base => base.base).filter(base => base.player === playerId);
+  }
+
+  // add the number of troops inside a base to the model
+  private addFont(uid: number, amount: number): void {
+    // get the model
+    let base: CacheBase = this.bases[this.getListIndex(uid)];
+
+    // create to new fonts to display
+    let font: Group = this.modelService.getNumberAsFont(amount);
+
+    // name the font
+    font.name = 'number-bottom';
+
+    // scale the font
+    font.scale.set(0.08 / base.model.scale.x, 0.08 / base.model.scale.y, 0.08 / base.model.scale.z);
+    // move the font
+    font.position.set(-0.35 / base.model.scale.x, -0.25 / base.model.scale.y, 0);
+
+    // add the font as layer to the model
+    base.model.add(font);
+  }
+
+  // remove a font from the model
+  private removeFont(uid: number): void {
+    // get the model
+    let base: CacheBase = this.bases[this.getListIndex(uid)];
+
+    // create a list of models to remove
+    let modelsToRemove: Object3D[] = [];
+
+    // iterate through all the layers
+    base.model.traverse(model => {
+      // check if the layer is a number
+      if (model.name.includes("number")) {
+        // queue the layer destruction
+        modelsToRemove.push(model);
+      }
+    })
+
+    // remove the tagged layers
+    modelsToRemove.forEach(model => {
+      base.model.remove(model);
+    })
   }
 }
