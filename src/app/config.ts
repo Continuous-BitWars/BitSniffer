@@ -2,8 +2,8 @@ import {Euler, Vector3} from "three";
 import {ModelType} from "./models/model/model-type";
 import {Model} from "./models/model/model";
 
-export const webSocketURL: string = "wss://dealer.dev.bitwars.online/live"
-export const gameURL: string = "https://dealer.dev.bitwars.online/games"
+export const webSocketURL: string = "wss://dealer.bitwars.online/live"
+export const gameURL: string = "https://dealer.bitwars.online/games"
 
 export const minCameras: number = 1;
 export const maxCameras: number = 9;
