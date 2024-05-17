@@ -78,7 +78,7 @@ export class AttackService {
       this.update.emit({add: true, model: this.attacks[attackIndex].model});
 
       // add font
-      this.addFont(attackIndex, attack.amount);
+      this.addFont(attack.uuid, attack.amount);
 
       // move the attack towards its destination
       this.attacks[attackIndex].model.position.set(srcVec.x, srcVec.y, srcVec.z);
@@ -103,9 +103,9 @@ export class AttackService {
     // check if the attack lost troops
     if (this.attacks[attackIndex].attack.amount != attack.amount) {
       // remove the old font
-      this.removeFont(attackIndex);
+      this.removeFont(attack.uuid);
       // add the new font
-      this.addFont(attackIndex, attack.amount);
+      this.addFont(attack.uuid, attack.amount);
     }
 
     // move the cached attack model
@@ -167,7 +167,10 @@ export class AttackService {
   }
 
   // add the amount of an attack to the model
-  private addFont(attackIndex: number, amount: number): void {
+  private addFont(uuid: string, amount: number): void {
+    // get the model
+    let attack: CacheAttack = this.attacks[this.getListIndex(uuid)];
+
     // create to new fonts to display
     let fontFront: Group = this.modelService.getNumberAsFont(amount);
     let fontBack: Group = fontFront.clone();
@@ -185,17 +188,20 @@ export class AttackService {
     fontBack.position.set(0, -0.755, -6.5);
 
     // add the fonts as layers to the model
-    this.attacks[attackIndex].model.add(fontFront);
-    this.attacks[attackIndex].model.add(fontBack);
+    attack.model.add(fontFront);
+    attack.model.add(fontBack);
   }
 
   // remove a font from the model
-  private removeFont(attackIndex: number): void {
+  private removeFont(uuid: string): void {
+    // get the model
+    let attack: CacheAttack = this.attacks[this.getListIndex(uuid)];
+
     // create a list of models to remove
     let modelsToRemove: Object3D[] = [];
 
     // iterate through all the layers
-    this.attacks[attackIndex].model.traverse(model => {
+    attack.model.traverse(model => {
       // check if the layer is a number
       if (model.name.includes("number")) {
         // queue the layer destruction
@@ -205,7 +211,7 @@ export class AttackService {
 
     // remove the tagged layers
     modelsToRemove.forEach(model => {
-      this.attacks[attackIndex].model.remove(model);
+      attack.model.remove(model);
     })
   }
 }
