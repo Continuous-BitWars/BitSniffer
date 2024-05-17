@@ -40,7 +40,7 @@ export class BaseService {
       this.bases[baseIndex].model.position.set(base.position.x, base.position.y, base.position.z);
 
       // update the base with baseIndex with a new owner
-      this.updateColor(baseIndex, base.player);
+      this.updateColor(base.uid, base.player);
       // return since base is up-to-date
       return;
     }
@@ -58,7 +58,7 @@ export class BaseService {
     // check if the base got conquered
     if (this.bases[baseIndex].base.player !== base.player) {
       // update the owner color
-      this.updateColor(baseIndex, base.player);
+      this.updateColor(base.uid, base.player);
     }
 
     // update the rest of the base
@@ -66,9 +66,11 @@ export class BaseService {
   }
 
   // update the base team color
-  private updateColor(baseIndex: number, playerId: number): void {
+  private updateColor(uid: number, playerId: number): void {
+    let base: CacheBase = this.bases[this.getBaseListIndex(uid)];
+
     // loop over all model layers
-    this.bases[baseIndex].model.traverse((model) => {
+    base.model.traverse((model): void => {
       // check for the teamColor layer
       if (model.name.includes("teamColor")) {
         // idk why this works, so don't touch it
