@@ -135,7 +135,7 @@ export class BaseService {
     // scale the font
     font.scale.set(0.08 / base.model.scale.x, 0.08 / base.model.scale.y, 0.08 / base.model.scale.z);
     // move the font
-    font.position.set(-0.35 / base.model.scale.x, -0.25 / base.model.scale.y, 0);
+    font.position.set(-0.32 / base.model.scale.x, -0.25 / base.model.scale.y, 0);
 
     // add the font as layer to the model
     base.model.add(font);
