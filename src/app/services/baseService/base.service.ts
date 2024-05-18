@@ -56,6 +56,13 @@ export class BaseService {
       this.bases[baseIndex].model = this.modelService.getModel(base.level);
       // add the new model to the scene
       this.update.emit({add: true, model: this.bases[baseIndex].model});
+      // set the base position instant
+      this.bases[baseIndex].model.position.set(base.position.x, base.position.y, base.position.z);
+
+      // update the base with baseIndex with a new owner
+      this.updateColor(base.uid, base.player);
+      // add the population to the base
+      this.addFont(base.uid, base.population);
     }
 
     // check if the base got conquered
