@@ -33,16 +33,9 @@ export class BaseService {
     // check if the base exists
     if (baseIndex === -1) {
       // add a new base with its model
-      baseIndex = this.bases.push({base: base, model: this.modelService.getModel(base.level)}) - 1;
-      // emmit event so the sceneService can add the model to the scene
-      this.update.emit({add: true, model: this.bases[baseIndex].model});
-      // set the base position instant
-      this.bases[baseIndex].model.position.set(base.position.x, base.position.y, base.position.z);
-
-      // update the base with baseIndex with a new owner
-      this.updateColor(base.uid, base.player);
-      // add the population to the base
-      this.addFont(base.uid, base.population);
+      this.bases.push({base: base, model: this.modelService.getModel(base.level)});
+      // place the base
+      this.placeBase(base);
 
       // return since base is up-to-date
       return;
@@ -55,14 +48,7 @@ export class BaseService {
       // update the model
       this.bases[baseIndex].model = this.modelService.getModel(base.level);
       // add the new model to the scene
-      this.update.emit({add: true, model: this.bases[baseIndex].model});
-      // set the base position instant
-      this.bases[baseIndex].model.position.set(base.position.x, base.position.y, base.position.z);
-
-      // update the base with baseIndex with a new owner
-      this.updateColor(base.uid, base.player);
-      // add the population to the base
-      this.addFont(base.uid, base.population);
+      this.placeBase(base);
     }
 
     // check if the base got conquered
@@ -80,6 +66,22 @@ export class BaseService {
 
     // update the rest of the base
     this.bases[baseIndex].base = base;
+  }
+
+  // place a base
+  private placeBase(base: Base): void {
+    // get the index in cache
+    let model: Group = this.bases[this.getListIndex(base.uid)].model;
+
+    // emit a load instruction
+    this.update.emit({add: true, model: model});
+    // set the base position instant
+    model.position.set(base.position.x, base.position.y, base.position.z);
+
+    // update the base with baseIndex with a new owner
+    this.updateColor(base.uid, base.player);
+    // add the population to the base
+    this.addFont(base.uid, base.population);
   }
 
   // update the base team color
